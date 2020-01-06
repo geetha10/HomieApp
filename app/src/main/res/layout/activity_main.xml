@@ -35,7 +35,7 @@
         app:layout_constraintTop_toTopOf="@+id/addItemET"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
+    <!--<TextView
         android:id="@+id/displayListTV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,6 +47,14 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        />
+        />-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/displayListRV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
