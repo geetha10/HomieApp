@@ -33,10 +33,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         displayListRV=findViewById(R.id.displayListRV);
         RecyclerView.LayoutManager layout=new LinearLayoutManager(this);
         displayListRV.setLayoutManager(layout);
-
         itemAdaper = new ItemAdaper(itemsList);
         displayListRV.setAdapter(itemAdaper);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        itemsList.addAll(getItems());
+        itemAdaper.notifyDataSetChanged();
     }
 
     @Override
@@ -46,5 +52,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         itemsList.add(itemToAdd);
         itemAdaper.notifyItemInserted(itemsList.size());
         addItemET.setText("");
+    }
+
+    private List<Item> getItems(){
+        List<Item> tempList= new ArrayList<>();
+        String[] mandatoryItemsList={"Milk", "Eggs", "Sugar", "Salt"};
+        for(String mandatoryItemname: mandatoryItemsList){
+            Item tempItem=new Item(mandatoryItemname,false);
+            tempList.add(tempItem);
+        }
+        return tempList;
     }
 }

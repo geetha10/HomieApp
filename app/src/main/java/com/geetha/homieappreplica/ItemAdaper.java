@@ -4,12 +4,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+
+import static android.graphics.Paint.STRIKE_THRU_TEXT_FLAG;
 
 public class ItemAdaper  extends RecyclerView.Adapter<ItemAdaper.ItemViewHolder> {
 
@@ -37,7 +40,7 @@ public class ItemAdaper  extends RecyclerView.Adapter<ItemAdaper.ItemViewHolder>
         return listOfItems.size();
     }
 
-    class ItemViewHolder extends RecyclerView.ViewHolder {
+    class ItemViewHolder extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener {
 
         private TextView itemNameRV;
         private CheckBox itemIsDoneCB;
@@ -46,7 +49,12 @@ public class ItemAdaper  extends RecyclerView.Adapter<ItemAdaper.ItemViewHolder>
             super(itemView);
             itemNameRV=itemView.findViewById(R.id.itemNameTV);
             itemIsDoneCB=itemView.findViewById(R.id.itemIsDoneCB);
+            itemIsDoneCB.setOnCheckedChangeListener(this);
+        }
 
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            itemNameRV.setPaintFlags(STRIKE_THRU_TEXT_FLAG);
         }
     }
 }
