@@ -5,11 +5,23 @@ public class Item {
     String itemName;
     Boolean itemIsDone;
 
+    public Item(){
+
+    }
+
     public Item(String itemName, Boolean itemIsDone) {
         this.itemName = itemName;
         this.itemIsDone = itemIsDone;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "itemName='" + itemName + '\'' +
+                ", itemIsDone=" + itemIsDone +
+                '}';
+    }
+
     public String getItemName() {
         return itemName;
     }

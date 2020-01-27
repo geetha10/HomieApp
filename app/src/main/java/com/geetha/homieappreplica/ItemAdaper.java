@@ -41,10 +41,8 @@ public class ItemAdaper  extends RecyclerView.Adapter<ItemAdaper.ItemViewHolder>
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener {
-
         private TextView itemNameRV;
         private CheckBox itemIsDoneCB;
-
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
             itemNameRV=itemView.findViewById(R.id.itemNameTV);
