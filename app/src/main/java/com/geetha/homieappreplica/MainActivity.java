@@ -2,10 +2,8 @@ package com.geetha.homieappreplica;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,24 +23,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    //    EditText addItemET;
-
-    /*TextInputEditText.OnEditorActionListener addItemETListener = new TextInputEditText.OnEditorActionListener() {
-        @Override
-        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-            String itemName = addItemET.getText().toString();
-            if (itemName.trim().isEmpty()) return false;
-            Item itemToAdd = new Item(itemName, false);
-            itemsList.add(itemToAdd);
-            itemAdaper.notifyItemInserted(itemsList.size());
-            addItemET.setText("");
-            return true;
-        }
-    };*/
     TextInputEditText addItemET;
     Button addItemToListButton;
     RecyclerView displayListRV;
@@ -63,21 +46,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         displayListRV = findViewById(R.id.displayListRV);
         RecyclerView.LayoutManager layout = new LinearLayoutManager(this);
         displayListRV.setLayoutManager(layout);
-        //displayListRV.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         itemAdaper = new ItemAdaper(itemsList);
         displayListRV.setAdapter(itemAdaper);
-
-       // ValueEventListener valueEventListener;
         Log.d(TAG, "onCreate: OnCreate Done");
-
     }
 
     @Override
     protected void onResume() {
         Log.d(TAG, "onResume: Entering OnResume");
         super.onResume();
-        //itemsList.addAll(getItems());
-
         ChildEventListener messageListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -108,27 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         };
-       /* ValueEventListener messageListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot itemsFromDB: dataSnapshot.getChildren()){
-                        Item itemFromDB = itemsFromDB.getValue(Item.class);
-                        itemsList.add(itemFromDB);
-                        Log.d(TAG, "onDataChange: itemFromDB" + itemFromDB);
-                        itemAdaper.notifyDataSetChanged();
-                    }
-
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Failed to read value
-            }
-        };*/
         myRef.addChildEventListener(messageListener);
-        //itemAdaper.notifyDataSetChanged();
         Log.d(TAG, "onResume: OnResume done");
     }
 
@@ -142,22 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
         Item itemToAdd = new Item(itemName, false);
-        //myRef.push().setValue(itemToAdd);
         myRef.push().setValue(itemToAdd);
-        //itemsList.add(itemToAdd);
-        //itemAdaper.notifyItemInserted(itemsList.size());
         addItemET.setText("");
     }
-
-    /*private List<Item> getItems() {
-        List<Item> tempList = new ArrayList<>();
-        String[] mandatoryItemsList = {"Milk", "Eggs", "Sugar", "Salt"};
-       // myRef.on;
-        for (String mandatoryItemname : mandatoryItemsList) {
-            Item tempItem = new Item(mandatoryItemname, false);
-            //tempList.add(tempItem);
-            myRef.push().setValue(tempItem);
-        }
-        return tempList;
-    }*/
 }
