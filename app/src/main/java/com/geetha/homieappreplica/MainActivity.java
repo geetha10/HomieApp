@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                       itemsList.add(itemFromDB);
                       Log.d(TAG, "onDataChange: itemFromDB" + itemFromDB);
                       itemAdaper.notifyDataSetChanged();
+                     // itemsList.set(itemsList.size(), itemFromDB);
             }
 
             @Override
@@ -101,5 +102,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Item itemToAdd = new Item(itemName, false);
         myRef.push().setValue(itemToAdd);
         addItemET.setText("");
+        displayListRV.scrollToPosition(itemsList.size());
     }
 }
