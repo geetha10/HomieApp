@@ -7,19 +7,23 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageButton;
 import android.widget.Toast;
-
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
-public class WelcomeScreen extends AppCompatActivity implements View.OnClickListener {
 
-    ImageButton shoppingListImgBT;
+public class WelcomeScreen extends BaseActivity {
+
+    private static final String TAG = "WelcomeScreen";
     Toolbar toolbar;
+    BottomNavigationView bottomNavigationView;
+    FirebaseAuth mAuth;
+    Fragment selectedFragment=null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,18 +34,38 @@ public class WelcomeScreen extends AppCompatActivity implements View.OnClickList
         toolbar.setTitle("Welcome User");
         setSupportActionBar(toolbar);
 
-        shoppingListImgBT = findViewById(R.id.shoppingListImgBT);
-        shoppingListImgBT.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.shoppingListImgBT) {
-            Intent shoppingList = new Intent(this, MainActivity.class);
-            startActivity(shoppingList);
+        mAuth = FirebaseAuth.getInstance();
+        bottomNavigationView=findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
+        if(savedInstanceState==null){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fargment_container,new HomeFragment()).commit();
         }
 
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener= new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            Fragment selectedFragment=null;
+            switch(menuItem.getItemId()){
+                case R.id.nav_home:
+                    selectedFragment=new HomeFragment();
+                    break;
+                case R.id.nav_favorites:
+                    selectedFragment=new FavoritesFragment();
+                    break;
+                case R.id.nav_cal:
+                    selectedFragment=new CalendarFragment();
+                    break;
+                case R.id.nav_shoppingcart:
+                    selectedFragment=new ShoppingCartFragment();
+                    break;
+            }
+            getSupportFragmentManager().beginTransaction().replace(R.id.fargment_container,selectedFragment).commit();
+            return true;
+        }
+    };
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -86,11 +110,18 @@ public class WelcomeScreen extends AppCompatActivity implements View.OnClickList
 
             case R.id.menuLogout:
                 Toast.makeText(this, "You clicked logout", Toast.LENGTH_SHORT).show();
+                signOut();
                 break;
 
         }
+
         return true;
     }
 
-
+    private void signOut() {
+        mAuth.signOut();
+        Intent loginScreen = new Intent(this, LoginActivity.class);
+        loginScreen.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(loginScreen);
+    }
 }

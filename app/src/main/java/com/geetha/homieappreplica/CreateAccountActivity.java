@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-public class CreateUserActivity extends BaseActivity implements View.OnClickListener {
+public class CreateAccountActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = "Create User Activity :";
 
@@ -67,11 +67,11 @@ public class CreateUserActivity extends BaseActivity implements View.OnClickList
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
-                            Toast.makeText(CreateUserActivity.this,"Account created for User : "+user,Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CreateAccountActivity.this,"Account created for User : "+user,Toast.LENGTH_SHORT).show();
                         } else {
 
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(CreateUserActivity.this, "Authentication failed." + task.getException().toString(),
+                            Toast.makeText(CreateAccountActivity.this, "Authentication failed." + task.getException().toString(),
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
@@ -111,7 +111,7 @@ public class CreateUserActivity extends BaseActivity implements View.OnClickList
 
         } else {
 
-            //findViewById(R.id.userSignInBT).setVisibility(View.GONE);
+            findViewById(R.id.userSignInBT).setVisibility(View.GONE);
         }
     }
 }

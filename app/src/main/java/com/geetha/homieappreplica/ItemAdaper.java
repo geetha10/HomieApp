@@ -1,6 +1,5 @@
 package com.geetha.homieappreplica;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,22 +10,30 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.security.KeyStore;
 import java.util.List;
 
 import static android.graphics.Paint.STRIKE_THRU_TEXT_FLAG;
 
 public class ItemAdaper  extends RecyclerView.Adapter<ItemAdaper.ItemViewHolder> {
 
-    private List<Item> listOfItems;
+    interface OnItemUpdateCallback {
+        void update(Item item, int position);
+    }
 
-    private Item itemToUpdate= new Item();
+    private List<Item> listOfItems;
+    private OnItemUpdateCallback callback;
 
     private static final String TAG = "ItemAdapter";
 
     public ItemAdaper(List<Item> listOfItems) {
         this.listOfItems = listOfItems;
+        this.callback = callback;
     }
+
+    /*public ItemAdaper(List<Item> listOfItems, OnItemUpdateCallback callback) {
+        this.listOfItems = listOfItems;
+        this.callback = callback;
+    }*/
 
     @NonNull
     @Override
@@ -51,8 +58,10 @@ public class ItemAdaper  extends RecyclerView.Adapter<ItemAdaper.ItemViewHolder>
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 //int currentposition=itemViewHolder.getAdapterPosition() ;
-                if(isChecked) {
-                    Item itemToUpdateBf = listOfItems.get(position);
+                Item itemToUpdateBf = listOfItems.get(position);
+                itemToUpdateBf.setItemIsDone(isChecked);
+                callback.update(itemToUpdateBf, position);
+                /*if(isChecked) {
                     Item itemToUpdateAf = new Item(itemToUpdateBf.getItemName(),true);
                     listOfItems.remove(itemToUpdateBf);
                     listOfItems.add(itemToUpdateAf);
@@ -61,7 +70,7 @@ public class ItemAdaper  extends RecyclerView.Adapter<ItemAdaper.ItemViewHolder>
                 else{
                     listOfItems.get(position).setItemIsDone(false);
                     notifyItemChanged(position);
-                }
+                }*/
             }
         });
     }
