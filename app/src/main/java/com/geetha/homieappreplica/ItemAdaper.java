@@ -16,18 +16,17 @@ import static android.graphics.Paint.STRIKE_THRU_TEXT_FLAG;
 
 public class ItemAdaper  extends RecyclerView.Adapter<ItemAdaper.ItemViewHolder> {
 
-    interface OnItemUpdateCallback {
+    /*interface OnItemUpdateCallback {
         void update(Item item, int position);
-    }
-
+    }*/
     private List<Item> listOfItems;
-    private OnItemUpdateCallback callback;
+   // private OnItemUpdateCallback callback;
 
     private static final String TAG = "ItemAdapter";
 
     public ItemAdaper(List<Item> listOfItems) {
         this.listOfItems = listOfItems;
-        this.callback = callback;
+       // this.callback = callback;
     }
 
     /*public ItemAdaper(List<Item> listOfItems, OnItemUpdateCallback callback) {
@@ -60,8 +59,8 @@ public class ItemAdaper  extends RecyclerView.Adapter<ItemAdaper.ItemViewHolder>
                 //int currentposition=itemViewHolder.getAdapterPosition() ;
                 Item itemToUpdateBf = listOfItems.get(position);
                 itemToUpdateBf.setItemIsDone(isChecked);
-                callback.update(itemToUpdateBf, position);
-                /*if(isChecked) {
+                //callback.update(itemToUpdateBf, position);
+                if(isChecked) {
                     Item itemToUpdateAf = new Item(itemToUpdateBf.getItemName(),true);
                     listOfItems.remove(itemToUpdateBf);
                     listOfItems.add(itemToUpdateAf);
@@ -70,7 +69,7 @@ public class ItemAdaper  extends RecyclerView.Adapter<ItemAdaper.ItemViewHolder>
                 else{
                     listOfItems.get(position).setItemIsDone(false);
                     notifyItemChanged(position);
-                }*/
+                }
             }
         });
     }
@@ -79,7 +78,6 @@ public class ItemAdaper  extends RecyclerView.Adapter<ItemAdaper.ItemViewHolder>
     public int getItemCount() {
         return listOfItems.size();
     }
-
     class ItemViewHolder extends RecyclerView.ViewHolder{
         private TextView itemNameTV;
         private CheckBox itemIsDoneCB;

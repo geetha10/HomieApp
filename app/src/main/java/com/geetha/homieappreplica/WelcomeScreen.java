@@ -23,7 +23,6 @@ public class WelcomeScreen extends BaseActivity {
     Toolbar toolbar;
     BottomNavigationView bottomNavigationView;
     FirebaseAuth mAuth;
-    Fragment selectedFragment=null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,7 +81,6 @@ public class WelcomeScreen extends BaseActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
                 //do the search here
                 return false;
             }
